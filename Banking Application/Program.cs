@@ -9,19 +9,27 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Welcome to RoBank!");
-        var option = Options();
+        var isValid = true;
 
-        switch (option)
+        while (isValid)
         {
-            case 1:
-                Deposit();
-                break;
-            case 2:
-                Withdraw();
-                break;
-            case 3:
-                DisplayBalance();
-                break;
+            var option = Options();
+            switch (option)
+            {
+                case 1:
+                    Deposit();
+                    break;
+                case 2:
+                    Withdraw();
+                    break;
+                case 3:
+                    DisplayBalance();
+                    break;
+                case 4:
+                    Exit();
+                    isValid = false;
+                    break;
+            }
         }
     }
 
@@ -29,13 +37,14 @@ class Program
     {
         int option;
         var isValid = false;
-        var validOptions = new List<int> { 1, 2, 3 };     
+        var validOptions = new List<int> { 1, 2, 3, 4 };     
         do
         {
             Console.WriteLine("Please select an option: " +
                               "\n1. Deposit a credit balance " +
                               "\n2. Withdraw a credit balance " +
-                              "\n3. Display my current balance");
+                              "\n3. Display my current balance" +
+                              "\n4. Exit");
             var selectedOption = Console.ReadLine();
 
             if (int.TryParse(selectedOption, out option) && validOptions.Contains(option))
@@ -44,7 +53,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Invalid input, please select an option of 1, 2 or 3.");
+                Console.WriteLine("Invalid input, please select an option of 1, 2, 3 or 4.");
             }
 
         } while (!isValid);
@@ -107,5 +116,13 @@ class Program
     public static void DisplayBalance()
     {
         Console.WriteLine($"Your current balance is {_balance}");
+    }
+
+    public static void Exit()
+    {
+        Console.WriteLine("Press any key to exit...");
+        Console.ReadKey();
+
+        Environment.Exit(0);
     }
 }
