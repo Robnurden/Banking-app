@@ -8,16 +8,16 @@
             var isValid = false;
             do
             {
-                Console.WriteLine("How much would you like to withdraw? ");
+                Console.WriteLine("\nHow much would you like to withdraw? ");
                 var strAmount = Console.ReadLine();
 
-                if (int.TryParse(strAmount, out amount) && amount is > 0)
+                if (int.TryParse(strAmount, out amount) && amount > 0 && amount <= balance)
                 {
                     isValid = true;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input, please enter a number greater than 1.");
+                    Console.WriteLine("\nInvalid input, please enter a number greater than 1 and less than your current balance.");
                 }
 
             } while (!isValid);
