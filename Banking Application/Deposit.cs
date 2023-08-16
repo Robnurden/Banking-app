@@ -4,20 +4,21 @@
     {
         public static int DepositOption(int balance)
         {
+            const int maximumDeposit = 1000000;
             int amount;
             var isValid = false;
             do
             {
-                Console.WriteLine("How much would you like to deposit? ");
+                Console.WriteLine("\nHow much would you like to deposit? ");
                 var strAmount = Console.ReadLine();
 
-                if (int.TryParse(strAmount, out amount) && amount is < 1000000 and > 0)
+                if (int.TryParse(strAmount, out amount) && amount is < maximumDeposit and > 0)
                 {
                     isValid = true;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid input, please enter a number between 1 and 1,000,000.");
+                    Console.WriteLine("\nInvalid input, please enter a number between 1 and 1,000,000.");
                 }
 
             } while (!isValid);
