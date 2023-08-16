@@ -11,13 +11,17 @@ class Program
         Console.WriteLine("Welcome to RoBank!");
         var option = Options();
 
-        if (option == 1)
+        switch (option)
         {
-            Deposit();
-        }
-        if (option == 2)
-        {
-            DisplayBalance();
+            case 1:
+                Deposit();
+                break;
+            case 2:
+                Withdraw();
+                break;
+            case 3:
+                DisplayBalance();
+                break;
         }
     }
 
@@ -71,6 +75,31 @@ class Program
         } while (!isValid);
 
         _balance =+ amount;
+
+        DisplayBalance();
+    }
+
+    public static void Withdraw()
+    {
+        int amount;
+        var isValid = false;
+        do
+        {
+            Console.WriteLine("How much would you like to withdraw? ");
+            var strAmount = Console.ReadLine();
+
+            if (int.TryParse(strAmount, out amount) && amount is > 0)
+            {
+                isValid = true;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input, please enter a number greater than 1.");
+            }
+
+        } while (!isValid);
+
+        _balance = -amount;
 
         DisplayBalance();
     }
