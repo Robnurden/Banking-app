@@ -1,13 +1,10 @@
+using StringReader = System.IO.StringReader;
+
 namespace BankingApplicationTests
 {
     [TestFixture]
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
         // DisplayOptionsTests
         // When option is 1, deposit option is called
         // When option is 1, display balance is called
@@ -16,10 +13,14 @@ namespace BankingApplicationTests
         // SelectOptionTests
         // When method called, returns a valid integer.
 
+        // if I have 1000 in balance, and withdraw 100, I have 900 remaining.
+
         [Test]
-        public void Test1()
+        public void SelectOption_ReturnsExpectedOptionThatIsEntered()
         {
-            Assert.Pass();
+            var balance = 1000;
+
+
         }
     }
 }
