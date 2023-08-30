@@ -67,6 +67,7 @@
 
         public static void Exit()
         {
+            Console.WriteLine("\nThank you for using RoBank.");
             Environment.Exit(0);
         }
     }
