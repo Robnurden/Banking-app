@@ -11,22 +11,19 @@
             while (true)
             {
                 var selectedOption = OptionSelect();
-                DisplayMenu(selectedOption);
+                MenuOrchestrator(selectedOption);
             }
         }
 
-        public static void DisplayMenu(int selectedOption)
+        public static void MenuOrchestrator(int selectedOption)
         {
             switch (selectedOption)
             {
                 case 1:
                     _balance = Deposit.DepositOption(_balance);
-                    DisplayBalance();
                     break;
                 case 2:
-                    DisplayBalance();
                     _balance = Withdraw.WithdrawOption(_balance);
-                    DisplayBalance();
                     break;
                 case 3:
                     DisplayBalance();
@@ -34,6 +31,8 @@
                 case 4:
                     Exit();
                     return;
+                default:
+                    throw new ArgumentException("Invalid option");
             }
         }
 

@@ -9,8 +9,7 @@
             var isValid = false;
             do
             {
-                Console.WriteLine("\nHow much would you like to deposit? ");
-                var strAmount = Console.ReadLine();
+                var strAmount = GetDepositAmount();
 
                 if (int.TryParse(strAmount, out amount) && amount is < maximumDeposit and > 0)
                 {
@@ -26,6 +25,12 @@
             var newBalance = balance + amount;
 
             return newBalance;
+        }
+
+        public static string? GetDepositAmount()
+        {
+            Console.WriteLine("\nHow much would you like to deposit? ");
+            return Console.ReadLine();
         }
     }
 }
