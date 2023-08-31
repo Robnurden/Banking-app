@@ -2,7 +2,7 @@
 {
     public class Menu
     {
-        private static int _balance;
+        private static decimal _balance;
 
         public static void MainMenu()
         {
@@ -23,7 +23,7 @@
                     _balance = Deposit.DepositOrchestrator(_balance);
                     break;
                 case 2:
-                    _balance = Withdraw.WithdrawOption(_balance);
+                    _balance = Withdraw.WithdrawOrchestrator(_balance);
                     break;
                 case 3:
                     DisplayBalance();
@@ -78,8 +78,8 @@
         public static void DisplayListOfOptions()
         {
             Console.WriteLine("\nPlease select an option: " +
-                              "\n1. Deposit a credit balance " +
-                              "\n2. Withdraw a credit balance " +
+                              "\n1. Deposit an amount " +
+                              "\n2. Withdraw an amount " +
                               "\n3. Display my current balance" +
                               "\n4. Exit");
         }

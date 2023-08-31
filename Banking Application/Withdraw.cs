@@ -2,29 +2,64 @@
 {
     public class Withdraw
     {
-        public static int WithdrawOption(int balance)
+        private const decimal MinWithdrawal = 1;
+
+        public static decimal WithdrawOrchestrator(decimal balance)
         {
-            int amount;
-            var isValid = false;
+            if (!BalanceCheck(balance))
+            {
+                return balance;
+            }
+
+            decimal amount;
+            bool isValid;
             do
             {
-                Console.WriteLine("\nHow much would you like to withdraw? ");
-                var strAmount = Console.ReadLine();
+                var strAmount = GetWithdrawalAmount();
 
-                if (int.TryParse(strAmount, out amount) && amount > 0 && amount <= balance)
+                isValid = ValidateWithdrawalAmount(strAmount, out amount, balance);
+                
+                if (!isValid)
                 {
-                    isValid = true;
+                    PrintInvalidInputMessage(balance);
                 }
                 else
                 {
-                    Console.WriteLine("\nInvalid input, please enter a number greater than 1 and less than your current balance.");
+                    amount = int.Parse(strAmount);
                 }
 
             } while (!isValid);
 
-            var newBalance = balance - amount;
+            return balance - amount;
+        }
 
-            return newBalance;
+        public static bool BalanceCheck(decimal balance)
+        {
+            if (balance > 0)
+            {
+                return true;
+            }
+
+            Console.WriteLine($"Current balance is {balance}. Please deposit funds before you can withdraw.");
+
+            return false;
+        }
+
+        public static bool ValidateWithdrawalAmount(string? strAmount, out decimal amount, decimal balance)
+        {
+            return decimal.TryParse(strAmount, out amount) && amount > 0 && amount <= balance;
+        }
+
+        public static string? GetWithdrawalAmount()
+        {
+            Console.WriteLine("\nHow much would you like to withdraw? ");
+            var strAmount = Console.ReadLine();
+            return strAmount;
+        }
+
+        public static void PrintInvalidInputMessage(decimal balance)
+        {
+            Console.WriteLine($"\nInvalid input, please enter a value between {MinWithdrawal} and less than {balance}.");
         }
     }
 }

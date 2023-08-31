@@ -2,13 +2,13 @@
 {
     public class Deposit
     {
-        private const int MaxDeposit = 1000000;
-        private const int MinDeposit = 1;
+        private const decimal MaxDeposit = 1000000;
+        private const decimal MinDeposit = 1;
 
-        public static int DepositOrchestrator(int balance)
+        public static decimal DepositOrchestrator(decimal balance)
         {
             bool isValid;
-            var intAmount = 0;
+            decimal amount = 0;
             do
             {
                 var strAmount = GetDepositAmount();
@@ -21,12 +21,12 @@
                 }
                 else
                 {
-                    intAmount = int.Parse(strAmount);
+                    amount = decimal.Parse(strAmount);
                 }
 
             } while (!isValid);
 
-            return balance + intAmount;
+            return balance + amount;
         }
 
         public static string? GetDepositAmount()
@@ -37,7 +37,7 @@
 
         public static bool ValidateDepositAmount(string? strAmount)
         {
-            return int.TryParse(strAmount, out var amount) && amount is < MaxDeposit and > 0;
+            return decimal.TryParse(strAmount, out var amount) && amount is < MaxDeposit and > 0;
         }
 
         public static void PrintInvalidInputMessage()
