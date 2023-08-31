@@ -14,7 +14,8 @@ namespace BankingApplicationTests
         [TestCase(null, false)]
         public void ValidateDepositAmount_ReturnsExpectedValue_WhenAmountSupplied(string? strAmount, bool expectedResult)
         {
-            var result = Deposit.ValidateDepositAmount(strAmount);
+            var deposit = new Deposit();
+            var result = deposit.ValidateDepositAmount(strAmount);
 
             result.Should().Be(expectedResult);
         }
