@@ -34,7 +34,7 @@ namespace Banking_Application
 
         public string? GetDepositAmount()
         {
-            Console.WriteLine("\nHow much would you like to depositService?");
+            Console.WriteLine("\nHow much would you like to deposit?");
             return Console.ReadLine();
         }
 

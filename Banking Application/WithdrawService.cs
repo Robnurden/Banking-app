@@ -42,7 +42,7 @@ namespace Banking_Application
                 return true;
             }
 
-            Console.WriteLine($"Current balance is {balance}. Please depositService funds before you can withdraw.");
+            Console.WriteLine($"Current balance is {balance}. Please deposit funds before you can withdraw.");
 
             return false;
         }
