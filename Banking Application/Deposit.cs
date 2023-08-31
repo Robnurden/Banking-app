@@ -2,35 +2,47 @@
 {
     public class Deposit
     {
-        public static int DepositOption(int balance)
+        private const int MaxDeposit = 1000000;
+        private const int MinDeposit = 1;
+
+        public static int DepositOrchestrator(int balance)
         {
-            const int maximumDeposit = 1000000;
-            int amount;
-            var isValid = false;
+            bool isValid;
+            var intAmount = 0;
             do
             {
                 var strAmount = GetDepositAmount();
 
-                if (int.TryParse(strAmount, out amount) && amount is < maximumDeposit and > 0)
+                isValid = ValidateDepositAmount(strAmount);
+
+                if (!isValid)
                 {
-                    isValid = true;
+                    PrintInvalidInputMessage();
                 }
                 else
                 {
-                    Console.WriteLine("\nInvalid input, please enter a number between 1 and 1,000,000.");
+                    intAmount = int.Parse(strAmount);
                 }
 
             } while (!isValid);
 
-            var newBalance = balance + amount;
-
-            return newBalance;
+            return balance + intAmount;
         }
 
         public static string? GetDepositAmount()
         {
-            Console.WriteLine("\nHow much would you like to deposit? ");
+            Console.WriteLine("\nHow much would you like to deposit?");
             return Console.ReadLine();
+        }
+
+        public static bool ValidateDepositAmount(string? strAmount)
+        {
+            return int.TryParse(strAmount, out var amount) && amount is < MaxDeposit and > 0;
+        }
+
+        public static void PrintInvalidInputMessage()
+        {
+            Console.WriteLine($"\nInvalid input, please enter a number between {MinDeposit} and {MaxDeposit}.");
         }
     }
 }

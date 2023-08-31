@@ -20,7 +20,7 @@
             switch (selectedOption)
             {
                 case 1:
-                    _balance = Deposit.DepositOption(_balance);
+                    _balance = Deposit.DepositOrchestrator(_balance);
                     break;
                 case 2:
                     _balance = Withdraw.WithdrawOption(_balance);
