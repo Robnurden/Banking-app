@@ -8,6 +8,9 @@ namespace BankingApplicationTests
     {
         [TestCase("1", true)]
         [TestCase("2", true)]
+        [TestCase("2.1", true)]
+        [TestCase("2.12", true)]
+        [TestCase("2.121", false)]
         [TestCase("0", false)]
         [TestCase("1000001", false)]
         [TestCase(" ", false)]
