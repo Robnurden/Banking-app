@@ -25,7 +25,7 @@
                 }
                 else
                 {
-                    amount = int.Parse(strAmount);
+                    amount = decimal.Parse(strAmount);
                 }
 
             } while (!isValid);
