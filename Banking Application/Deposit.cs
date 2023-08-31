@@ -7,6 +7,7 @@ namespace Banking_Application
     {
         private const decimal MaxDeposit = 1000000;
         private const decimal MinDeposit = 1;
+        private const string CurrencyRegex = @"^\-?[0-9]+(?:\.[0-9]{1,2})?$";
 
         public decimal DepositOrchestrator(decimal balance)
         {
@@ -40,8 +41,7 @@ namespace Banking_Application
 
         public bool ValidateDepositAmount(string? strAmount)
         {
-            string pattern = @"^\-?[0-9]+(?:\.[0-9]{1,2})?$";
-            var isValidDecimalString = Regex.IsMatch(strAmount, pattern);
+            var isValidDecimalString = strAmount != null && Regex.IsMatch(strAmount, CurrencyRegex);
 
             if (isValidDecimalString)
             {
