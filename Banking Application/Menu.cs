@@ -4,7 +4,16 @@ namespace Banking_Application
 {
     public class Menu
     {
+        private readonly IDepositService _depositService;
+        private readonly IWithdrawService _withdrawService;
+
         private static decimal _balance;
+
+        public Menu(IDepositService depositService, IWithdrawService withdrawService)
+        {
+            _depositService = depositService;
+            _withdrawService = withdrawService;
+        }
 
         public void MainMenu()
         {
@@ -22,12 +31,10 @@ namespace Banking_Application
             switch (selectedOption)
             {
                 case 1:
-                    var deposit = new Deposit();
-                    _balance = deposit.DepositOrchestrator(_balance);
+                    _balance = _depositService.DepositOrchestrator(_balance);
                     break;
                 case 2:
-                    var withdraw = new Withdraw();
-                    _balance = withdraw.WithdrawOrchestrator(_balance);
+                    _balance = _withdrawService.WithdrawOrchestrator(_balance);
                     break;
                 case 3:
                     DisplayBalance();

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Banking_Application
 {
-    public class Deposit : IDeposit
+    public class DepositServiceService : IDepositService
     {
         private const decimal MaxDeposit = 1000000;
         private const decimal MinDeposit = 1;
@@ -35,7 +35,7 @@ namespace Banking_Application
 
         public string? GetDepositAmount()
         {
-            Console.WriteLine("\nHow much would you like to deposit?");
+            Console.WriteLine("\nHow much would you like to depositService?");
             return Console.ReadLine();
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace Banking_Application;
 
-public interface IDeposit
+public interface IDepositService
 {
     decimal DepositOrchestrator(decimal balance);
     

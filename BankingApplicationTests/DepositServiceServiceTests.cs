@@ -4,7 +4,7 @@ using FluentAssertions;
 namespace BankingApplicationTests
 {
     [TestFixture]
-    public class DepositTests
+    public class DepositServiceServiceTests
     {
         [TestCase("1", true)]
         [TestCase("2", true)]
@@ -14,7 +14,7 @@ namespace BankingApplicationTests
         [TestCase(null, false)]
         public void ValidateDepositAmount_ReturnsExpectedValue_WhenAmountSupplied(string? strAmount, bool expectedResult)
         {
-            var deposit = new Deposit();
+            var deposit = new DepositServiceService();
             var result = deposit.ValidateDepositAmount(strAmount);
 
             result.Should().Be(expectedResult);
