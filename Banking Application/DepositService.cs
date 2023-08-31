@@ -1,9 +1,8 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Banking_Application
 {
-    public class DepositServiceService : IDepositService
+    public class DepositService : IDepositService
     {
         private const decimal MaxDeposit = 1000000;
         private const decimal MinDeposit = 1;
