@@ -1,11 +1,11 @@
 ﻿namespace Banking_Application
 {
-    public class Deposit
+    public class Deposit : IDeposit
     {
         private const decimal MaxDeposit = 1000000;
         private const decimal MinDeposit = 1;
 
-        public static decimal DepositOrchestrator(decimal balance)
+        public decimal DepositOrchestrator(decimal balance)
         {
             bool isValid;
             decimal amount = 0;
@@ -29,18 +29,18 @@
             return balance + amount;
         }
 
-        public static string? GetDepositAmount()
+        public string? GetDepositAmount()
         {
             Console.WriteLine("\nHow much would you like to deposit?");
             return Console.ReadLine();
         }
 
-        public static bool ValidateDepositAmount(string? strAmount)
+        public bool ValidateDepositAmount(string? strAmount)
         {
             return decimal.TryParse(strAmount, out var amount) && amount is < MaxDeposit and > 0;
         }
 
-        public static void PrintInvalidInputMessage()
+        public void PrintInvalidInputMessage()
         {
             Console.WriteLine($"\nInvalid input, please enter a number between {MinDeposit} and {MaxDeposit}.");
         }

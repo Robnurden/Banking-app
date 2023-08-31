@@ -4,7 +4,7 @@
     {
         private const decimal MinWithdrawal = 1;
 
-        public static decimal WithdrawOrchestrator(decimal balance)
+        public decimal WithdrawOrchestrator(decimal balance)
         {
             if (!BalanceCheck(balance))
             {
@@ -33,7 +33,7 @@
             return balance - amount;
         }
 
-        public static bool BalanceCheck(decimal balance)
+        public bool BalanceCheck(decimal balance)
         {
             if (balance > 0)
             {
@@ -45,19 +45,19 @@
             return false;
         }
 
-        public static bool ValidateWithdrawalAmount(string? strAmount, out decimal amount, decimal balance)
+        public bool ValidateWithdrawalAmount(string? strAmount, out decimal amount, decimal balance)
         {
             return decimal.TryParse(strAmount, out amount) && amount > 0 && amount <= balance;
         }
 
-        public static string? GetWithdrawalAmount()
+        public string? GetWithdrawalAmount()
         {
             Console.WriteLine("\nHow much would you like to withdraw? ");
             var strAmount = Console.ReadLine();
             return strAmount;
         }
 
-        public static void PrintInvalidInputMessage(decimal balance)
+        public void PrintInvalidInputMessage(decimal balance)
         {
             Console.WriteLine($"\nInvalid input, please enter a value between {MinWithdrawal} and less than {balance}.");
         }

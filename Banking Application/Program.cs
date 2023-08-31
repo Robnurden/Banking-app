@@ -3,6 +3,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Menu.MainMenu();
+        var menu = new Menu();
+        menu.MainMenu();
     }
 }

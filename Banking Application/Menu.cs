@@ -4,7 +4,7 @@
     {
         private static decimal _balance;
 
-        public static void MainMenu()
+        public void MainMenu()
         {
             DisplayGreeting();
 
@@ -15,15 +15,17 @@
             }
         }
 
-        public static void MenuOrchestrator(int selectedOption)
+        public void MenuOrchestrator(int selectedOption)
         {
             switch (selectedOption)
             {
                 case 1:
-                    _balance = Deposit.DepositOrchestrator(_balance);
+                    var deposit = new Deposit();
+                    _balance = deposit.DepositOrchestrator(_balance);
                     break;
                 case 2:
-                    _balance = Withdraw.WithdrawOrchestrator(_balance);
+                    var withdraw = new Withdraw();
+                    _balance = withdraw.WithdrawOrchestrator(_balance);
                     break;
                 case 3:
                     DisplayBalance();
@@ -36,12 +38,12 @@
             }
         }
 
-        public static void DisplayGreeting()
+        public void DisplayGreeting()
         {
             Console.WriteLine("Welcome to RoBank!");
         }
 
-        public static int OptionSelect()
+        public int OptionSelect()
         {
             string? selectedOption;
             bool isValid;
@@ -55,7 +57,7 @@
             return int.Parse(selectedOption);
         }
 
-        public static bool OptionValidation(string? selectedOption)
+        public bool OptionValidation(string? selectedOption)
         {
             var isValid = ValidateOption(selectedOption);
 
@@ -67,7 +69,7 @@
             return isValid;
         }
 
-        public static string? OptionReader()
+        public string? OptionReader()
         {
             DisplayListOfOptions();
             var selectedOption = Console.ReadLine();
@@ -75,7 +77,7 @@
             return selectedOption;
         }
 
-        public static void DisplayListOfOptions()
+        public void DisplayListOfOptions()
         {
             Console.WriteLine("\nPlease select an option: " +
                               "\n1. Deposit an amount " +
@@ -84,24 +86,24 @@
                               "\n4. Exit");
         }
 
-        public static bool ValidateOption(string? selectedOption)
+        public bool ValidateOption(string? selectedOption)
         {
             var validOptions = new List<int> { 1, 2, 3, 4 };
 
             return int.TryParse(selectedOption, out var option) && validOptions.Contains(option);
         }
 
-        private static void PrintInvalidOptionMessage()
+        private void PrintInvalidOptionMessage()
         {
             Console.WriteLine("\nInvalid input, please select an option of 1, 2, 3, or 4.\n");
         }
 
-        public static void DisplayBalance()
+        public void DisplayBalance()
         {
             Console.WriteLine($"\nYour current balance is {_balance}");
         }
 
-        public static void Exit()
+        public void Exit()
         {
             Console.WriteLine("\nThank you for using RoBank.");
             Environment.Exit(0);
