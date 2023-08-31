@@ -1,4 +1,7 @@
-﻿namespace Banking_Application
+﻿using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
+
+namespace Banking_Application
 {
     public class Deposit : IDeposit
     {
@@ -21,12 +24,12 @@
                 }
                 else
                 {
-                    amount = decimal.Parse(strAmount);
+                    amount = Math.Round(decimal.Parse(strAmount), 2, MidpointRounding.AwayFromZero);
                 }
 
             } while (!isValid);
 
-            return balance + amount;
+            return Math.Round(balance + amount, 2, MidpointRounding.AwayFromZero);
         }
 
         public string? GetDepositAmount()
@@ -37,12 +40,20 @@
 
         public bool ValidateDepositAmount(string? strAmount)
         {
-            return decimal.TryParse(strAmount, out var amount) && amount is < MaxDeposit and > 0;
+            string pattern = @"^\-?[0-9]+(?:\.[0-9]{1,2})?$";
+            var isValidDecimalString = Regex.IsMatch(strAmount, pattern);
+
+            if (isValidDecimalString)
+            {
+                return decimal.TryParse(strAmount, out var amount) && amount is < MaxDeposit and > 0;
+            }
+
+            return false;
         }
 
         public void PrintInvalidInputMessage()
         {
-            Console.WriteLine($"\nInvalid input, please enter a number between {MinDeposit} and {MaxDeposit}.");
+            Console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinDeposit} and {MaxDeposit}.");
         }
     }
 }

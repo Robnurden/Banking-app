@@ -1,4 +1,6 @@
-﻿namespace Banking_Application
+﻿using System.Text.RegularExpressions;
+
+namespace Banking_Application
 {
     public class Withdraw
     {
@@ -11,13 +13,13 @@
                 return balance;
             }
 
-            decimal amount;
+            decimal amount = 0;
             bool isValid;
             do
             {
                 var strAmount = GetWithdrawalAmount();
 
-                isValid = ValidateWithdrawalAmount(strAmount, out amount, balance);
+                isValid = ValidateWithdrawalAmount(strAmount, balance);
                 
                 if (!isValid)
                 {
@@ -25,12 +27,12 @@
                 }
                 else
                 {
-                    amount = decimal.Parse(strAmount);
+                    amount = Math.Round(decimal.Parse(strAmount), 2, MidpointRounding.AwayFromZero);
                 }
 
             } while (!isValid);
 
-            return balance - amount;
+            return Math.Round(balance - amount, 2, MidpointRounding.AwayFromZero);
         }
 
         public bool BalanceCheck(decimal balance)
@@ -45,9 +47,17 @@
             return false;
         }
 
-        public bool ValidateWithdrawalAmount(string? strAmount, out decimal amount, decimal balance)
+        public bool ValidateWithdrawalAmount(string? strAmount, decimal balance)
         {
-            return decimal.TryParse(strAmount, out amount) && amount > 0 && amount <= balance;
+            string pattern = @"^\-?[0-9]+(?:\.[0-9]{1,2})?$";
+            var isValidDecimalString = Regex.IsMatch(strAmount, pattern);
+
+            if (isValidDecimalString)
+            {
+                return decimal.TryParse(strAmount, out var amount) && amount > 0 && amount <= balance;
+            }
+
+            return false;
         }
 
         public string? GetWithdrawalAmount()
@@ -59,7 +69,7 @@
 
         public void PrintInvalidInputMessage(decimal balance)
         {
-            Console.WriteLine($"\nInvalid input, please enter a value between {MinWithdrawal} and less than {balance}.");
+            Console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinWithdrawal} and less than {balance + (decimal)0.01}.");
         }
     }
 }
