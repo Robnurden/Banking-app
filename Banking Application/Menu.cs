@@ -26,27 +26,6 @@ namespace Banking_Application
             }
         }
 
-        public void MenuOrchestrator(int selectedOption)
-        {
-            switch (selectedOption)
-            {
-                case 1:
-                    _balance = _depositService.DepositOrchestrator(_balance);
-                    break;
-                case 2:
-                    _balance = _withdrawService.WithdrawOrchestrator(_balance);
-                    break;
-                case 3:
-                    DisplayBalance();
-                    break;
-                case 4:
-                    Exit();
-                    return;
-                default:
-                    throw new ArgumentException("Invalid option");
-            }
-        }
-
         public void DisplayGreeting()
         {
             Console.WriteLine("Welcome to RoBank!");
@@ -64,6 +43,25 @@ namespace Banking_Application
             } while (!isValid);
 
             return int.Parse(selectedOption);
+        }
+
+        public void MenuOrchestrator(int selectedOption)
+        {
+            switch (selectedOption)
+            {
+                case 1:
+                    _balance = _depositService.DepositOrchestrator(_balance);
+                    break;
+                case 2:
+                    _balance = _withdrawService.WithdrawOrchestrator(_balance);
+                    break;
+                case 3:
+                    DisplayBalance();
+                    break;
+                case 4:
+                    Exit();
+                    return;
+            }
         }
 
         public bool OptionValidation(string? selectedOption)
