@@ -6,8 +6,11 @@ namespace Banking_Application
     {
         private readonly IDepositService _depositService;
         private readonly IWithdrawService _withdrawService;
-
         private static decimal _balance;
+        private const string Greeting = "Welcome to RoBank";
+        private const string DepositOption = "Deposit an amount";
+        private const string WithdrawOption = "Withdraw an amount";
+        private const string BalanceOption = "Display your current balance";
 
         public Menu(IDepositService depositService, IWithdrawService withdrawService)
         {
@@ -17,28 +20,28 @@ namespace Banking_Application
 
         public void MainMenu()
         {
-            DisplayGreeting();
+            Console.WriteLine($"{Greeting}");
 
             while (true)
             {
-                var selectedOption = OptionSelect();
+                var selectedOption = GetSelectedOption();
                 MenuOrchestrator(selectedOption);
             }
         }
 
-        public void DisplayGreeting()
-        {
-            Console.WriteLine("Welcome to RoBank!");
-        }
-
-        public int OptionSelect()
+        public int GetSelectedOption()
         {
             string? selectedOption;
             bool isValid;
             do
             {
-                selectedOption = OptionReader();
-                isValid = OptionValidation(selectedOption);
+                selectedOption = ReadSelectedOption();
+                isValid = ValidateOption(selectedOption);
+
+                if (!isValid)
+                {
+                    PrintInvalidOptionMessage();
+                }
 
             } while (!isValid);
 
@@ -64,33 +67,15 @@ namespace Banking_Application
             }
         }
 
-        public bool OptionValidation(string? selectedOption)
-        {
-            var isValid = ValidateOption(selectedOption);
-
-            if (!isValid)
-            {
-                PrintInvalidOptionMessage();
-            }
-
-            return isValid;
-        }
-
-        public string? OptionReader()
-        {
-            DisplayListOfOptions();
-            var selectedOption = Console.ReadLine();
-
-            return selectedOption;
-        }
-
-        public void DisplayListOfOptions()
+        public string? ReadSelectedOption()
         {
             Console.WriteLine("\nPlease select an option: " +
-                              "\n1. Deposit an amount " +
-                              "\n2. Withdraw an amount " +
-                              "\n3. Display my current balance" +
+                              $"\n1. {DepositOption} " +
+                              $"\n2. {WithdrawOption} " +
+                              $"\n3. {BalanceOption}" +
                               "\n4. Exit");
+
+            return Console.ReadLine();
         }
 
         public bool ValidateOption(string? selectedOption)
