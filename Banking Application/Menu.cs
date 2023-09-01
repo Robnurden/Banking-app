@@ -25,7 +25,7 @@
             while (true)
             {
                 var selectedOption = GetSelectedOption();
-                MenuOrchestrator(selectedOption);
+                OptionHandler(selectedOption);
             }
         }
 
@@ -48,7 +48,7 @@
             return int.Parse(selectedOption);
         }
 
-        public void MenuOrchestrator(int selectedOption)
+        public void OptionHandler(int selectedOption)
         {
             switch (selectedOption)
             {
