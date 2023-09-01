@@ -1,9 +1,11 @@
-﻿namespace Banking_Application
+﻿using System.Globalization;
+
+namespace Banking_Application
 {
     public interface IBalanceService
     {
         void DisplayBalance(decimal balance);
 
-        string GetCurrencySymbol(string currencyCode);
+        CultureInfo GetCultureInfo();
     }
 }

@@ -4,29 +4,30 @@ namespace Banking_Application
 {
     public class BalanceService : IBalanceService
     {
+        private const string Currency = "en-GB";
+
         public void DisplayBalance(decimal balance)
         {
-            string currencyCode = "en-GB";
-
-            CultureInfo cultureInfo = new CultureInfo(currencyCode);
-            cultureInfo.NumberFormat.CurrencySymbol = GetCurrencySymbol(currencyCode);
-
-            string formattedAmount = string.Format(cultureInfo, "{0:C}", balance);
+            var cultureInfo = GetCultureInfo();
+            
+            var formattedAmount = string.Format(cultureInfo, "{0:C}", balance);
 
             Console.WriteLine($"\nYour current balance is {formattedAmount}");
         }
 
-        public string GetCurrencySymbol(string currencyCode)
+        public CultureInfo GetCultureInfo()
         {
-            try
+            var region = new RegionInfo(Currency);
+
+            var cultureInfo = new CultureInfo(Currency)
             {
-                RegionInfo region = new RegionInfo(currencyCode);
-                return region.CurrencySymbol;
-            }
-            catch (ArgumentException)
-            {
-                return currencyCode;
-            }
+                NumberFormat =
+                {
+                    CurrencySymbol = region.CurrencySymbol
+                }
+            };
+
+            return cultureInfo;
         }
     }
 }
