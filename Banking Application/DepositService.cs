@@ -11,7 +11,7 @@ namespace Banking_Application
         public decimal DepositOrchestrator(decimal balance)
         {
             bool isValid;
-            decimal amount = 0;
+            decimal roundedAmount = 0;
             do
             {
                 var strAmount = GetDepositAmount();
@@ -24,12 +24,14 @@ namespace Banking_Application
                 }
                 else
                 {
-                    amount = Math.Round(decimal.Parse(strAmount), 2, MidpointRounding.AwayFromZero);
+                    var amount = decimal.Parse(strAmount);
+
+                    roundedAmount = CalculateAmountWithRounding(balance + amount);
                 }
 
             } while (!isValid);
 
-            return Math.Round(balance + amount, 2, MidpointRounding.AwayFromZero);
+            return roundedAmount;
         }
 
         public string? GetDepositAmount()
@@ -53,6 +55,11 @@ namespace Banking_Application
         public void PrintInvalidInputMessage()
         {
             Console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinDeposit} and {MaxDeposit}.");
+        }
+
+        public decimal CalculateAmountWithRounding(decimal amount)
+        {
+            return Math.Round(amount, 2, MidpointRounding.AwayFromZero);
         }
     }
 }
