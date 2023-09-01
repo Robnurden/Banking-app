@@ -5,22 +5,24 @@
         private readonly IDepositService _depositService;
         private readonly IWithdrawService _withdrawService;
         private readonly IBalanceService _balanceService;
+        private readonly ConsoleWrapper console;
         private static decimal _balance;
         private const string Greeting = "Welcome to RoBank";
         private const string DepositOption = "Deposit an amount";
         private const string WithdrawOption = "Withdraw an amount";
         private const string BalanceOption = "Display your current balance";
 
-        public Menu(IDepositService depositService, IWithdrawService withdrawService, IBalanceService balanceService)
+        public Menu(IDepositService depositService, IWithdrawService withdrawService, IBalanceService balanceService, ConsoleWrapper console)
         {
             _depositService = depositService;
             _withdrawService = withdrawService;
             _balanceService = balanceService;
+            this.console = console;
         }
 
         public void MainMenu()
         {
-            Console.WriteLine($"{Greeting}");
+            console.WriteLine($"{Greeting}");
 
             while (true)
             {
@@ -69,13 +71,13 @@
 
         public string? ReadSelectedOption()
         {
-            Console.WriteLine("\nPlease select an option: " +
+            console.WriteLine("\nPlease select an option: " +
                               $"\n1. {DepositOption} " +
                               $"\n2. {WithdrawOption} " +
                               $"\n3. {BalanceOption}" +
                               "\n4. Exit");
 
-            return Console.ReadLine();
+            return console.ReadLine();
         }
 
         public bool ValidateOption(string? selectedOption)
@@ -87,12 +89,12 @@
 
         private void PrintInvalidOptionMessage()
         {
-            Console.WriteLine("\nInvalid input, please select an option of 1, 2, 3, or 4.\n");
+            console.WriteLine("\nInvalid input, please select an option of 1, 2, 3, or 4.\n");
         }
 
         public void Exit()
         {
-            Console.WriteLine("\nThank you for using RoBank.");
+            console.WriteLine("\nThank you for using RoBank.");
             Environment.Exit(0);
         }
     }

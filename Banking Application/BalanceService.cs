@@ -4,7 +4,13 @@ namespace Banking_Application
 {
     public class BalanceService : IBalanceService
     {
+        private readonly ConsoleWrapper console;
         private const string Currency = "en-GB";
+
+        public BalanceService(ConsoleWrapper console)
+        {
+            this.console = console;
+        }
 
         public void DisplayBalance(decimal balance)
         {
@@ -12,7 +18,7 @@ namespace Banking_Application
             
             var formattedAmount = string.Format(cultureInfo, "{0:C}", balance);
 
-            Console.WriteLine($"\nYour current balance is {formattedAmount}");
+            console.WriteLine($"\nYour current balance is {formattedAmount}");
         }
 
         public CultureInfo GetCultureInfo()

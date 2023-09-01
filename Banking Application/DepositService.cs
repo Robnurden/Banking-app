@@ -4,9 +4,15 @@ namespace Banking_Application
 {
     public class DepositService : IDepositService
     {
+        private readonly ConsoleWrapper console;
         private const decimal MaxDeposit = 1000000;
         private const decimal MinDeposit = 1;
         private const string CurrencyRegex = @"^\-?[0-9]+(?:\.[0-9]{1,2})?$";
+
+        public DepositService(ConsoleWrapper console)
+        {
+            this.console = console;
+        }
 
         public decimal DepositOrchestrator(decimal balance)
         {
@@ -36,8 +42,8 @@ namespace Banking_Application
 
         public string? GetDepositAmount()
         {
-            Console.WriteLine("\nHow much would you like to deposit?");
-            return Console.ReadLine();
+            console.WriteLine("\nHow much would you like to deposit?");
+            return console.ReadLine();
         }
 
         public bool ValidateDepositAmount(string? strAmount)
@@ -54,7 +60,7 @@ namespace Banking_Application
 
         public void PrintInvalidInputMessage()
         {
-            Console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinDeposit} and {MaxDeposit}.");
+            console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinDeposit} and {MaxDeposit}.");
         }
 
         public decimal CalculateAmountWithRounding(decimal amount)

@@ -4,7 +4,13 @@ namespace Banking_Application
 {
     public class WithdrawService : IWithdrawService
     {
+        private readonly ConsoleWrapper console;
         private const decimal MinWithdrawal = 1;
+
+        public WithdrawService(ConsoleWrapper console)
+        {
+            this.console = console;
+        }
 
         public decimal WithdrawOrchestrator(decimal balance)
         {
@@ -42,7 +48,7 @@ namespace Banking_Application
                 return true;
             }
 
-            Console.WriteLine($"Current balance is {balance}. Please deposit funds before you can withdraw.");
+            console.WriteLine($"Current balance is {balance}. Please deposit funds before you can withdraw.");
 
             return false;
         }
@@ -62,14 +68,14 @@ namespace Banking_Application
 
         public string? GetWithdrawalAmount()
         {
-            Console.WriteLine("\nHow much would you like to withdraw? ");
-            var strAmount = Console.ReadLine();
+            console.WriteLine("\nHow much would you like to withdraw? ");
+            var strAmount = console.ReadLine();
             return strAmount;
         }
 
         public void PrintInvalidInputMessage(decimal balance)
         {
-            Console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinWithdrawal} and less than {balance + (decimal)0.01}.");
+            console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinWithdrawal} and less than {balance + (decimal)0.01}.");
         }
     }
 }
