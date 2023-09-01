@@ -1,11 +1,15 @@
 using Banking_Application;
 using FluentAssertions;
+using Moq;
 
 namespace BankingApplicationTests
 {
     [TestFixture]
     public class DepositServiceTests
     {
+        private const int MinDeposit = 1;
+        private const int MaxDeposit = 1000000;
+
         [TestCase("1", true)]
         [TestCase("2", true)]
         [TestCase("2.1", true)]
@@ -19,6 +23,21 @@ namespace BankingApplicationTests
         {
             var deposit = new DepositService(new ConsoleWrapper());
             var result = deposit.ValidateDepositAmount(strAmount);
+
+            result.Should().Be(expectedResult);
+        }
+
+        [TestCase("100", 100, 200)]
+        [TestCase("100.01", 100.01, 200.02)]
+        public void DepositOrchestrator_ReturnsValueAddedToBalance_WhenAValidDepositIsMade(string? strAmount, decimal balance, decimal expectedResult)
+        {
+            var consoleMock = new Mock<ConsoleWrapper>();
+            consoleMock.Setup(c => c.ReadLine())
+                .Returns(strAmount);
+
+            var deposit = new DepositService(consoleMock.Object);
+
+            var result = deposit.DepositOrchestrator(balance);
 
             result.Should().Be(expectedResult);
         }
