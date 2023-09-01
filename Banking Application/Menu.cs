@@ -1,21 +1,21 @@
-﻿using System.Globalization;
-
-namespace Banking_Application
+﻿namespace Banking_Application
 {
     public class Menu
     {
         private readonly IDepositService _depositService;
         private readonly IWithdrawService _withdrawService;
+        private readonly IBalanceService _balanceService;
         private static decimal _balance;
         private const string Greeting = "Welcome to RoBank";
         private const string DepositOption = "Deposit an amount";
         private const string WithdrawOption = "Withdraw an amount";
         private const string BalanceOption = "Display your current balance";
 
-        public Menu(IDepositService depositService, IWithdrawService withdrawService)
+        public Menu(IDepositService depositService, IWithdrawService withdrawService, IBalanceService balanceService)
         {
             _depositService = depositService;
             _withdrawService = withdrawService;
+            _balanceService = balanceService;
         }
 
         public void MainMenu()
@@ -59,7 +59,7 @@ namespace Banking_Application
                     _balance = _withdrawService.WithdrawOrchestrator(_balance);
                     break;
                 case 3:
-                    DisplayBalance();
+                    _balanceService.DisplayBalance(_balance);
                     break;
                 case 4:
                     Exit();
@@ -90,35 +90,10 @@ namespace Banking_Application
             Console.WriteLine("\nInvalid input, please select an option of 1, 2, 3, or 4.\n");
         }
 
-        public void DisplayBalance()
-        {
-            string currencyCode = "en-GB";
-
-            CultureInfo cultureInfo = new CultureInfo(currencyCode);
-            cultureInfo.NumberFormat.CurrencySymbol = GetCurrencySymbol(currencyCode);
-
-            string formattedAmount = string.Format(cultureInfo, "{0:C}", _balance);
-
-            Console.WriteLine($"\nYour current balance is {formattedAmount}");
-        }
-
         public void Exit()
         {
             Console.WriteLine("\nThank you for using RoBank.");
             Environment.Exit(0);
-        }
-
-        public string GetCurrencySymbol(string currencyCode)
-        {
-            try
-            {
-                RegionInfo region = new RegionInfo(currencyCode);
-                return region.CurrencySymbol;
-            }
-            catch (ArgumentException)
-            {
-                return currencyCode;
-            }
         }
     }
 }
