@@ -19,7 +19,7 @@ namespace Banking_Application
                 return balance;
             }
 
-            decimal amount = 0;
+            decimal roundedAmount = 0;
             bool isValid;
             do
             {
@@ -33,12 +33,14 @@ namespace Banking_Application
                 }
                 else
                 {
-                    amount = Math.Round(decimal.Parse(strAmount), 2, MidpointRounding.AwayFromZero);
+                    var amount = decimal.Parse(strAmount);
+
+                    roundedAmount = CalculateAmountWithRounding(amount);
                 }
 
             } while (!isValid);
 
-            return Math.Round(balance - amount, 2, MidpointRounding.AwayFromZero);
+            return CalculateAmountWithRounding(balance - roundedAmount);
         }
 
         public bool BalanceCheck(decimal balance)
@@ -76,6 +78,11 @@ namespace Banking_Application
         public void PrintInvalidInputMessage(decimal balance)
         {
             console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinWithdrawal} and less than {balance + (decimal)0.01}.");
+        }
+
+        private decimal CalculateAmountWithRounding(decimal amount)
+        {
+            return Math.Round(amount, 2, MidpointRounding.AwayFromZero);
         }
     }
 }
