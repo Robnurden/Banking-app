@@ -6,10 +6,12 @@ namespace Banking_Application
     {
         private readonly ConsoleWrapper console;
         private const decimal MinWithdrawal = 1;
+        private decimal _balanceThreshold;
 
-        public WithdrawService(ConsoleWrapper console)
+        public WithdrawService(ConsoleWrapper console, decimal balanceThreshold)
         {
             this.console = console;
+            this._balanceThreshold = balanceThreshold;
         }
 
         public decimal WithdrawOrchestrator(decimal balance)
@@ -43,9 +45,9 @@ namespace Banking_Application
             return CalculateAmountWithRounding(balance - roundedAmount);
         }
 
-        public bool BalanceCheck(decimal balance)
+        private bool BalanceCheck(decimal balance)
         {
-            if (balance > 0)
+            if (balance > _balanceThreshold)
             {
                 return true;
             }
@@ -58,7 +60,7 @@ namespace Banking_Application
         public bool ValidateWithdrawalAmount(string? strAmount, decimal balance)
         {
             string pattern = @"^\-?[0-9]+(?:\.[0-9]{1,2})?$";
-            var isValidDecimalString = Regex.IsMatch(strAmount, pattern);
+            var isValidDecimalString = strAmount != null && Regex.IsMatch(strAmount, pattern);
 
             if (isValidDecimalString)
             {
@@ -68,14 +70,14 @@ namespace Banking_Application
             return false;
         }
 
-        public string? GetWithdrawalAmount()
+        private string? GetWithdrawalAmount()
         {
             console.WriteLine("\nHow much would you like to withdraw? ");
             var strAmount = console.ReadLine();
             return strAmount;
         }
 
-        public void PrintInvalidInputMessage(decimal balance)
+        private void PrintInvalidInputMessage(decimal balance)
         {
             console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinWithdrawal} and less than {balance + (decimal)0.01}.");
         }

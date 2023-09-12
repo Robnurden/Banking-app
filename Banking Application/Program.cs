@@ -5,7 +5,7 @@ class Program
     {
         var menu = new Menu(
             new DepositService(new ConsoleWrapper()),
-            new WithdrawService(new ConsoleWrapper()),
+            new WithdrawService(new ConsoleWrapper(), 0),
             new BalanceService(new ConsoleWrapper()),
             new ConsoleWrapper()
             );
