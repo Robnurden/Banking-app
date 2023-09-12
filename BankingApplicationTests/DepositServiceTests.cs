@@ -7,8 +7,18 @@ namespace BankingApplicationTests
     [TestFixture]
     public class DepositServiceTests
     {
+        private DepositService _depositService;
+        private Mock<ConsoleWrapper> _consoleWrapper;
+
         private const int MinDeposit = 1;
         private const int MaxDeposit = 1000000;
+
+        [SetUp]
+        public void Setup()
+        {
+            _consoleWrapper = new Mock<ConsoleWrapper>();
+            _depositService = new DepositService(_consoleWrapper.Object);
+        }
 
         [TestCase("1", true)]
         [TestCase("2", true)]
@@ -21,8 +31,7 @@ namespace BankingApplicationTests
         [TestCase(null, false)]
         public void ValidateDepositAmount_ReturnsExpectedValue_WhenAmountSupplied(string? strAmount, bool expectedResult)
         {
-            var deposit = new DepositService(new ConsoleWrapper());
-            var result = deposit.ValidateDepositAmount(strAmount);
+            var result = _depositService.ValidateDepositAmount(strAmount);
 
             result.Should().Be(expectedResult);
         }
@@ -31,13 +40,10 @@ namespace BankingApplicationTests
         [TestCase("100.01", 100.01, 200.02)]
         public void DepositOrchestrator_ReturnsValueAddedToBalance_WhenAValidDepositIsMade(string? strAmount, decimal balance, decimal expectedResult)
         {
-            var consoleMock = new Mock<ConsoleWrapper>();
-            consoleMock.Setup(c => c.ReadLine())
+            _consoleWrapper.Setup(c => c.ReadLine())
                 .Returns(strAmount);
 
-            var deposit = new DepositService(consoleMock.Object);
-
-            var result = deposit.DepositOrchestrator(balance);
+            var result = _depositService.DepositOrchestrator(balance);
 
             result.Should().Be(expectedResult);
         }
@@ -46,15 +52,14 @@ namespace BankingApplicationTests
         public void DepositOrchestrator_PrintsInvalidInputMessage_WhenAnInvalidDepositIsEntered()
         {
             var expectedString = $"\nInvalid input. Please enter an amount up to two decimal places, between {MinDeposit} and {MaxDeposit}.";
-            var consoleMock = new Mock<ConsoleWrapper>();
-            consoleMock.SetupSequence(c => c.ReadLine())
+
+            _consoleWrapper.SetupSequence(c => c.ReadLine())
                 .Returns(" ")
                 .Returns("1");
 
-            var deposit = new DepositService(consoleMock.Object);
-            deposit.DepositOrchestrator(100);
+            _depositService.DepositOrchestrator(100);
 
-            consoleMock.Verify(c =>
+            _consoleWrapper.Verify(c =>
                 c.WriteLine(expectedString));
         }
     }
