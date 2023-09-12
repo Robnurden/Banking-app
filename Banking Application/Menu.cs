@@ -17,7 +17,7 @@
             _depositService = depositService;
             _withdrawService = withdrawService;
             _balanceService = balanceService;
-            this._console = console;
+            _console = console;
         }
 
         public void MainMenu()
