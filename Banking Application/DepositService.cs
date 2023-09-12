@@ -40,12 +40,6 @@ namespace Banking_Application
             return roundedAmount;
         }
 
-        public string? GetDepositAmount()
-        {
-            console.WriteLine("\nHow much would you like to deposit?");
-            return console.ReadLine();
-        }
-
         public bool ValidateDepositAmount(string? strAmount)
         {
             var isValidDecimalString = strAmount != null && Regex.IsMatch(strAmount, CurrencyRegex);
@@ -58,12 +52,18 @@ namespace Banking_Application
             return false;
         }
 
-        public void PrintInvalidInputMessage()
+        private string? GetDepositAmount()
+        {
+            console.WriteLine("\nHow much would you like to deposit?");
+            return console.ReadLine();
+        }
+
+        private void PrintInvalidInputMessage()
         {
             console.WriteLine($"\nInvalid input. Please enter an amount up to two decimal places, between {MinDeposit} and {MaxDeposit}.");
         }
 
-        public decimal CalculateAmountWithRounding(decimal amount)
+        private decimal CalculateAmountWithRounding(decimal amount)
         {
             return Math.Round(amount, 2, MidpointRounding.AwayFromZero);
         }

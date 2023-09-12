@@ -1,8 +1,6 @@
 using Banking_Application;
 using FluentAssertions;
 using Moq;
-using System.Diagnostics.Metrics;
-using System.Numerics;
 
 namespace BankingApplicationTests
 {
@@ -47,7 +45,7 @@ namespace BankingApplicationTests
         [Test]
         public void DepositOrchestrator_PrintsInvalidInputMessage_WhenAnInvalidDepositIsEntered()
         {
-            var expectedString = "\nInvalid input. Please enter an amount up to two decimal places, between 1 and 1000000.";
+            var expectedString = $"\nInvalid input. Please enter an amount up to two decimal places, between {MinDeposit} and {MaxDeposit}.";
             var consoleMock = new Mock<ConsoleWrapper>();
             consoleMock.SetupSequence(c => c.ReadLine())
                 .Returns(" ")
