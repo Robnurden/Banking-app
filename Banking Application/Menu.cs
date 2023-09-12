@@ -5,7 +5,7 @@
         private readonly IDepositService _depositService;
         private readonly IWithdrawService _withdrawService;
         private readonly IBalanceService _balanceService;
-        private readonly ConsoleWrapper console;
+        private readonly ConsoleWrapper _console;
         private static decimal _balance;
         private const string Greeting = "Welcome to RoBank";
         private const string DepositOption = "Deposit an amount";
@@ -17,12 +17,12 @@
             _depositService = depositService;
             _withdrawService = withdrawService;
             _balanceService = balanceService;
-            this.console = console;
+            this._console = console;
         }
 
         public void MainMenu()
         {
-            console.WriteLine($"{Greeting}");
+            _console.WriteLine($"{Greeting}");
 
             while (true)
             {
@@ -71,13 +71,13 @@
 
         public string? ReadSelectedOption()
         {
-            console.WriteLine("\nPlease select an option: " +
+            _console.WriteLine("\nPlease select an option: " +
                               $"\n1. {DepositOption} " +
                               $"\n2. {WithdrawOption} " +
                               $"\n3. {BalanceOption}" +
                               "\n4. Exit");
 
-            return console.ReadLine();
+            return _console.ReadLine();
         }
 
         public bool ValidateOption(string? selectedOption)
@@ -89,12 +89,12 @@
 
         private void PrintInvalidOptionMessage()
         {
-            console.WriteLine("\nInvalid input, please select an option of 1, 2, 3, or 4.\n");
+            _console.WriteLine("\nInvalid input, please select an option of 1, 2, 3, or 4.\n");
         }
 
         public void Exit()
         {
-            console.WriteLine("\nThank you for using RoBank.");
+            _console.WriteLine("\nThank you for using RoBank.");
             Environment.Exit(0);
         }
     }
