@@ -69,7 +69,7 @@
             }
         }
 
-        public string? ReadSelectedOption()
+        private string? ReadSelectedOption()
         {
             _console.WriteLine("\nPlease select an option: " +
                               $"\n1. {DepositOption} " +
